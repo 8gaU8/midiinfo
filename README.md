@@ -3,7 +3,7 @@
 ## install and usage
 
 ```bash
-$ pipx install path/to/midiinfo
+$ pipx install git+https://github.com/8gaU8/midiinfo/
 $ midiinfo
 pygame 2.5.2 (SDL 2.28.3, Python 3.12.1)
 Hello from the pygame community. https://www.pygame.org/contribute.html
