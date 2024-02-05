@@ -1,29 +1,22 @@
-import pygame.midi as m
+from typing import Union
+
+from rtmidi import MidiIn, MidiOut  # type: ignore
+
+
+def _print_ports_names(midi_port: Union[MidiIn, MidiOut]):
+    for i, port in enumerate(midi_port.get_ports()):
+        print(f"\t{i}: {port}")
 
 
 def print_midi_info():
-    m.init()
-    dev_num = m.get_count()
-    outputs = []
-    inputs = []
-    for dev_id in range(dev_num):
-        (interf, name, is_input, is_output, is_opened) = m.get_device_info(dev_id)
-        if is_input == 1:
-            inputs.append("\n\t" + str(dev_id) + ": " + name.decode())
-        elif is_output == 1:
-            outputs.append("\n\t" + str(dev_id) + ": " + name.decode())
-    print(" inputs: ", *inputs)
-    print("outputs: ", *outputs)
-    m.quit()
+    midiout = MidiOut()
+    midiin = MidiIn()
 
-
-def main():
-    print_midi_info()
+    print("Outputs: ")
+    _print_ports_names(midiout)
+    print("inputs: ")
+    _print_ports_names(midiin)
 
 
 def main_cli():
-    main()
-
-
-if __name__ == "__main__":
-    main_cli()
+    print_midi_info()
