@@ -41,6 +41,11 @@ def print_midi_info_rtmidi():
 
 
 def print_midi_info(backend: Literal["pygame", "rtmidi"] = "pygame"):
+    """
+    Args:
+        backend (Literal['pygame', 'rtmidi'], optional): 'pygame' or 'rtmidi'.
+
+    """
     if backend == "pygame":
         print_midi_info_pygame()
         return
