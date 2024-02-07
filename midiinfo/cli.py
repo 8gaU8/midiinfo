@@ -34,18 +34,47 @@ def print_midi_info_rtmidi():
     midiout = MidiOut()
     midiin = MidiIn()
 
+    print(" Inputs: ")
+    print_ports_names(midiin)
     print("Outputs: ")
     print_ports_names(midiout)
-    print("Inputs: ")
-    print_ports_names(midiin)
 
 
-def print_midi_info(backend: Literal["pygame", "rtmidi"] = "pygame"):
+def print_audio_info():
+    print("using backend: pyaudio")
+    import pyaudio
+
+    pa = pyaudio.PyAudio()
+    input_devices = []
+    output_devices = []
+    for i in range(pa.get_device_count()):
+        info = pa.get_device_info_by_index(i)
+        msg = f"\n\t{i}: {info['name']}"
+        if info["maxInputChannels"] > 0:
+            input_devices.append(msg)
+        if info["maxOutputChannels"] > 0:
+            output_devices.append(msg)
+    print(" Inputs: ", *input_devices)
+    print("Outputs: ", *output_devices)
+    print("\n")
+    pa.terminate()
+
+
+def print_midi_info(
+    backend: Literal["pygame", "rtmidi"] = "pygame",
+    audio: bool = False,
+):
     """
     Args:
         backend (Literal['pygame', 'rtmidi'], optional): 'pygame' or 'rtmidi'.
+        audio (bool): show audio_devices
 
     """
+    if audio:
+        print("====AUDIO DEVICES====")
+        print_audio_info()
+
+    print("====MIDI DEVICES====")
     if backend == "pygame":
         print_midi_info_pygame()
         return
