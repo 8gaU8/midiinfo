@@ -49,7 +49,7 @@ def print_audio_info():
     output_devices = []
     for i in range(pa.get_device_count()):
         info = pa.get_device_info_by_index(i)
-        msg = f"\n\t{i}: {info['name']}"
+        msg = f'\n\t{i}: "{info['name']}"'
         if info["maxInputChannels"] > 0:
             input_devices.append(msg)
         if info["maxOutputChannels"] > 0:
